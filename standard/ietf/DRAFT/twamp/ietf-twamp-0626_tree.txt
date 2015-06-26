@@ -1,0 +1,102 @@
+module: ietf-twamp
+   +--rw twamp
+      +--rw twamp-client! {control-client}?
+      |  +--rw client-admin-state              boolean
+      |  +--rw mode-preference-chain* [priority]
+      |  |  +--rw priority    uint16
+      |  |  +--rw mode?       bits
+      |  +--rw key-chain* [key-id]
+      |  |  +--rw key-id        string
+      |  |  +--rw secret-key?   string
+      |  +--rw twamp-client-ctrl-connection* [ctrl-connection-name]
+      |     +--rw ctrl-connection-name     string
+      |     +--rw client-ip?               inet:ip-address
+      |     +--rw server-ip                inet:ip-address
+      |     +--rw server-tcp-port?         inet:port-number
+      |     +--rw dscp?                    inet:dscp
+      |     +--rw key-id?                  string
+      |     +--rw max-count?               uint32
+      |     +--ro client-tcp-port?         inet:port-number
+      |     +--ro server-start-time?       uint64
+      |     +--ro ctrl-connection-state?   ctrl-connection-state
+      |     +--ro selected-mode?           bits
+      |     +--ro token?                   binary
+      |     +--ro client-iv?               binary
+      |     +--rw twamp-session-request* [test-session-name]
+      |        +--rw test-session-name     string
+      |        +--rw sender-ip?            inet:ip-address
+      |        +--rw sender-udp-port?      inet:port-number
+      |        +--rw reflector-ip          inet:ip-address
+      |        +--rw reflector-udp-port?   inet:port-number
+      |        +--rw timeout?              uint64
+      |        +--rw padding-length?       uint32
+      |        +--rw dscp?                 inet:dscp
+      |        +--rw start-time?           uint64
+      |        +--rw repeat?               boolean
+      |        +--rw repeat-interval?      uint32
+      |        +--rw pm-reg-list* [pm-index]
+      |        |  +--rw pm-index    uint16
+      |        +--ro test-session-state?   test-session-state
+      |        +--ro sid?                  string
+      +--rw twamp-server! {server}?
+      |  +--rw server-admin-state              boolean
+      |  +--rw server-tcp-port?                inet:port-number
+      |  +--rw servwait?                       uint32
+      |  +--rw dscp?                           inet:dscp
+      |  +--rw count?                          uint32
+      |  +--rw max-count?                      uint32
+      |  +--rw modes?                          bits
+      |  +--rw key-chain* [key-id]
+      |  |  +--rw key-id        string
+      |  |  +--rw secret-key?   string
+      |  +--ro twamp-server-ctrl-connection* [client-ip client-tcp-port server-ip server-tcp-port]
+      |     +--ro client-ip                       inet:ip-address
+      |     +--ro client-tcp-port                 inet:port-number
+      |     +--ro server-ip                       inet:ip-address
+      |     +--ro server-tcp-port                 inet:port-number
+      |     +--ro server-ctrl-connection-state?   server-ctrl-connection-state
+      |     +--ro dscp?                           inet:dscp
+      |     +--ro selected-mode?                  bits
+      |     +--ro key-id?                         string
+      |     +--ro count?                          uint32
+      |     +--ro max-count?                      uint32
+      |     +--ro salt?                           binary
+      |     +--ro server-iv?                      binary
+      |     +--ro challenge?                      binary
+      +--rw twamp-session-sender {session-sender}?
+      |  +--rw twamp-sender-test-tession* [test-session-name]
+      |     +--rw test-session-name         string
+      |     +--ro ctrl-connection-name?     string
+      |     +--rw fill-mode?                fill-mode
+      |     +--rw number-of-packets?        uint32
+      |     +--rw (packet-distribution)?
+      |     |  +--:(fixed)
+      |     |  |  +--rw fixed-interval?           uint32
+      |     |  |  +--rw fixed-interval-units?     units
+      |     |  +--:(poisson)
+      |     |     +--rw lambda?                   uint32
+      |     |     +--rw lambda-units?             uint32
+      |     |     +--rw max-interval?             uint32
+      |     |     +--rw truncation-point-units?   units
+      |     +--ro sender-session-state?     sender-session-state
+      |     +--ro sent-packets?             uint32
+      |     +--ro rcv-packets?              uint32
+      |     +--ro last-sent-seq?            uint32
+      |     +--ro last-rcv-seq?             uint32
+      +--rw twamp-session-reflector {session-reflector}?
+         +--rw refwait?                        uint32
+         +--ro twamp-reflector-test-session* [sender-ip sender-udp-port reflector-ip reflector-udp-port]
+            +--ro sid?                                 string
+            +--ro sender-ip                            inet:ip-address
+            +--ro sender-udp-port                      inet:port-number
+            +--ro reflector-ip                         inet:ip-address
+            +--ro reflector-udp-port                   inet:port-number
+            +--ro parent-connection-client-ip?         inet:ip-address
+            +--ro parent-connection-client-tcp-port?   inet:port-number
+            +--ro parent-connection-server-ip?         inet:ip-address
+            +--ro parent-connection-server-tcp-port?   inet:port-number
+            +--ro dscp?                                inet:dscp
+            +--ro sent-packets?                        uint32
+            +--ro rcv-packets?                         uint32
+            +--ro last-sent-seq?                       uint32
+            +--ro last-rcv-seq?                        uint32
